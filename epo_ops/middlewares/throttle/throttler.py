@@ -4,7 +4,7 @@ import logging
 import time
 
 from ..middleware import Middleware
-from .storages import SQLite
+from .storages import DjangoCache
 from .utils import service_for_url
 
 log = logging.getLogger(__name__)
@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 class Throttler(Middleware):
     def __init__(self, history_storage=None):
-        self.history = history_storage or SQLite()
+        self.history = history_storage or DjangoCache()
 
     def process_request(self, env, url, data, **kwargs):
         if not env["from-cache"]:
